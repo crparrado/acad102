@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import io
 
 # ---------------------------------------------------------
 # Título fijo del dashboard (no incluye el NRC)
@@ -101,9 +102,10 @@ if uploaded_file is not None:
 
     # ---------------------------------------------------------
     # 7) Graficar cada pregunta (matplotlib) con colores solicitados
+    #    y permitir descargar cada gráfica en PNG.
     # ---------------------------------------------------------
     st.subheader("Gráficas de cada pregunta")
-    for _, row in df.iterrows():
+    for idx, row in df.iterrows():
         respuestas_dict = {
             'nunca': row['nunca'],
             'casi_nunca': row['casi_nunca'],
@@ -138,7 +140,32 @@ if uploaded_file is not None:
         ax.set_ylabel("Alumnos", color="#ab172b")
         ax.set_xlabel("")  # Sin etiqueta en eje X
 
+        # Mostrar la figura en Streamlit
         st.pyplot(fig)
+
+        # -------------------------------------------------------
+        # Generar botón de descarga en formato PNG
+        # -------------------------------------------------------
+        img_data = io.BytesIO()
+        fig.savefig(img_data, format='png', bbox_inches='tight')
+        img_data.seek(0)  # Volver al inicio del archivo en memoria
+
+        # Construimos un nombre de archivo seguro basado en la pregunta
+        safe_name = row['pregunta'].replace(" ", "_").replace("á","a").replace("é","e")\
+                                   .replace("í","i").replace("ó","o").replace("ú","u")\
+                                   .replace("ñ","n").replace(",","").replace("¿","")\
+                                   .replace("?","").replace("¡","").replace("!","")\
+                                   .replace("(","").replace(")","")
+        file_name = f"grafica_{idx}_{safe_name[:30]}.png"  # recortado a 30 chars
+
+        st.download_button(
+            label="Descargar gráfica",
+            data=img_data,
+            file_name=file_name,
+            mime="image/png"
+        )
+
+        # Cerrar la figura para no acumular
         plt.close(fig)
 
     # ---------------------------------------------------------
