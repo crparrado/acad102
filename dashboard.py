@@ -6,8 +6,18 @@ import io
 # ---------------------------------------------------------
 # Título fijo del dashboard (no incluye el NRC)
 # ---------------------------------------------------------
-st.title("ACAD102 2025/10")
+st.title("Taller de Innovación y Emprendimiento 2025")
 
+# ---------------------------------------------------------
+# Instrucciones de uso del dashboard
+# ---------------------------------------------------------
+st.markdown(
+    """
+    **Cómo usar el dashboard:**
+    1. Arrastra o haz clic en el recuadro **"Sube tu archivo .txt con la tabla"** para seleccionar tu archivo.
+    2. El dashboard procesará el archivo y mostrará la información general, resultados, gráficas y comentarios.
+    """
+)
 # ---------------------------------------------------------
 # Carga del archivo .txt
 # ---------------------------------------------------------
