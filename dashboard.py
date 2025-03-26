@@ -16,6 +16,7 @@ st.markdown(
     **Cómo usar el dashboard:**
     1. Arrastra o haz clic en el recuadro **"Sube tu archivo .txt con la tabla"** para seleccionar tu archivo.
     2. El dashboard procesará el archivo y mostrará la información general, resultados, gráficas y comentarios.
+    3. Puedes descargar los gráficos con el botón "Descargar gráfica"
     """
 )
 # ---------------------------------------------------------
